@@ -1,8 +1,8 @@
 function getArrayParams(arr) {
   let min, max, sum, avg;
 
-  min = 100;
-  max = -100;
+  min = arr[0];
+  max = arr[0];
   sum = 0;
   avg = 0;
   console.log(arr)
@@ -16,9 +16,10 @@ function getArrayParams(arr) {
     };
 
     sum = sum + arr[i];
-    avg = Number((sum / arr.length).toFixed(2))
+    
   }; 
 
+  avg = Number((sum / arr.length).toFixed(2))
   return { min: min, max: max, avg: avg };
 }
 

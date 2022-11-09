@@ -33,6 +33,15 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
       return span.textContent
     }
   };
+
+  // Вариант проверки на пустую строку или не корректно заполненую от руководителя
+  // if (isNaN(percent)) {
+  //   return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`
+  // } else if (isNaN(contribution)) {
+  //   return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`
+  // } else if (isNaN(amount)) {
+  //   return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`
+  // }
   
   let loanBody = parseInt(amount) - parseInt(contribution);
   let dateNow = Date.parse(new Date());
