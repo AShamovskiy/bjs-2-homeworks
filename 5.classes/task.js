@@ -77,84 +77,108 @@ class Library {
    }
 
    findBookBy (type, value) {
-      let book = this.books.find( function (item) {
-         if(item[type] === value) {
-            return item[type]
-         } 
-      })
-      if ( book != undefined){
-         return book
-      } else {
-         return null
-      }
+      const book = this.books.find((item) => item[type] === value)
+      return book || null
+
+      // let book = this.books.find( function (item) {
+      //    if(item[type] === value) {
+      //       return item[type]
+      //    } 
+      // })
+      // if ( book != undefined){
+      //    return book
+      // } else {
+      //    return null
+      // }
    }
 
    giveBookByName(bookName) {
+      const indexDeleteBook = this.books.findIndex(item => item.name === bookName)
+      this.books = this.books.filter((item) => item.name != bookName)
+      return indexDeleteBook || null
       
-      let indexDeleteBook = this.books.findIndex(item => item.name === bookName)
+      // let indexDeleteBook = this.books.findIndex(item => item.name === bookName)
       
-      if (indexDeleteBook === -1)  {
-         return null
-      } else {
-         const book = this.books.splice(indexDeleteBook, 1)[0]
-         console.log(book)
-         return book;
+      // if (indexDeleteBook === -1)  {
+      //    return null
+      // } else {
+      //    const book = this.books.splice(indexDeleteBook, 1)[0]
+      //    console.log(book)
+      //    return book;
 
-      }
-        
+      // }
    }
 }
 
 // Задание 3
-function Student(name, gender, age) {
-   this.name = name,
+class Student {
+   constructor (name, gender, age) {
+      this.name = name,
    this.gender = gender,
    this.age = age
-     // Ваш код
- 
- };
- 
- Student.prototype.setSubject = function (subjectName) {
-   //ваш код
-   this.subject = subjectName
+   }
+  
+   addMark = function (mark, subject) {
+      if (mark < 1 || mark > 5) {
+         return console.log(`Ошибка, оценка должна быть числом от 1 до 5`)
+      }
+      if (this.marks === undefined) {
+         this.marks = []
+      }
    
- };
- 
- // ваш код для остальных методов
- Student.prototype.addMark = function (mark, subject) {
-   
-   if (this.subject === undefined) {
-     this.subject = [mark];
-   }else {
-    this.subject.push(mark);
+      if (this.marks[subject] === undefined) {
+         this.marks[subject] = [mark]; 
+      } else {
+         this.marks[subject].push(mark);
+      };
+   }
+   addMarks = function ( subject, ...marks) {
+      if (this.marks === undefined) {
+         this.marks = []
+      }
+         
+      if (this.marks[subject] === undefined) {
+         this.marks[subject] = [...marks];
+      }else {
+         this.marks[subject].push(...marks);
+      };
    };
- };
+
+   getAverageBySubject = function(subject) {
+      if (this.marks[subject] === undefined) {
+         return console.log('Несуществующий предмет')
+      }
    
- Student.prototype.addMarks = function ( ...marks, ) {
-   if (this.subject === undefined) {
-     this.subject = [...marks];
-   }else {
-     this.subject.push(...marks);
+      let averageBySubject = this.marks[subject].reduce((acc, item, index, arr) => {
+         acc += item;
+         if (index === arr.length - 1) {
+            return acc / arr.length;
+         }
+         return acc
+      }, 0); 
+      return console.log(`Средний балл по предмету ${subject} : ${averageBySubject}`)
+   }
+
+   getAverage = function () {
+      let average = this.marks.map((item) => getAverageBySubject(item))
+
+      return console.log(`Средний балл по всем предметам : ${average}`)
    };
- };
- 
- Student.prototype.getAverage = function () {
-   this.average = this.marks.reduce((acc, item, index, arr) => {
-     acc += item;
-     if (index === arr.length - 1) {
-       return acc / arr.length;
-     };
-     
-     return acc; 
- 
-   }, 0);
-   return this.average
-     // this.average = this.mark / this.mark.length
- };
- 
- Student.prototype.exclude = function (reason) {
-   this.excluded = reason,
-   delete this.marks,
-   delete this.subject
- };
- 
+
+   exclude = function (reason) {
+      this.excluded = reason,
+      delete this.marks
+   };
+};
+
+// const student = new Student("ivan", "male", 15);
+// console.log(student.addMark(5, "algebra"));
+// student.addMark(5, "algebra");
+// student.addMark(5, "geometry");
+// student.addMark(4, "geometry");
+//  student.addMark(6, "geometry"); // "Ошибка, оценка должна быть числом от 1 до 5"
+//  student.getAverageBySubject("geometry"); // Средний балл по предмету geometry 4.5
+//  student.getAverageBySubject("algebra"); // Средний балл по предмету geometry 4.5
+//  student.getAverageBySubject("biology"); // Несуществующий предмет
+//  student.getAverage(); // Средний балл по всем предметам 4.75
+//  student.exclude("Исключен за попытку подделать оценки");
