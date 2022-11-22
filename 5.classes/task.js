@@ -93,9 +93,9 @@ class Library {
    }
 
    giveBookByName(bookName) {
-      const indexDeleteBook = this.books.findIndex(item => item.name === bookName)
+      const deleteBook = this.books.find(item => item.name === bookName)
       this.books = this.books.filter((item) => item.name != bookName)
-      return indexDeleteBook || null
+      return deleteBook || null
       
       // let indexDeleteBook = this.books.findIndex(item => item.name === bookName)
       
@@ -113,11 +113,11 @@ class Library {
 // Задание 3
 class Student {
    constructor (name, gender, age) {
-      this.name = name,
+   this.name = name,
    this.gender = gender,
-   this.age = age
+   this.age = age 
    }
-  
+
    addMark = function (mark, subject) {
       if (mark < 1 || mark > 5) {
          return console.log(`Ошибка, оценка должна быть числом от 1 до 5`)
@@ -149,7 +149,7 @@ class Student {
          return console.log('Несуществующий предмет')
       }
    
-      let averageBySubject = this.marks[subject].reduce((acc, item, index, arr) => {
+      const averageBySubject = this.marks[subject].reduce((acc, item, index, arr) => {
          acc += item;
          if (index === arr.length - 1) {
             return acc / arr.length;
@@ -160,9 +160,10 @@ class Student {
    }
 
    getAverage = function () {
-      let average = this.marks.map((item) => getAverageBySubject(item))
-
-      return console.log(`Средний балл по всем предметам : ${average}`)
+      let arrMarks = Object.values(student.marks);
+      const arrAverage = arrMarks.flat(2);
+      const average = (arrAverage.reduce((acc, item) => acc + item, 0)) / arrAverage.length;
+      return console.log(`Средний балл по всем предметам : ${average}`);
    };
 
    exclude = function (reason) {
