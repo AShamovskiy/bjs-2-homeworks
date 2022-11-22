@@ -115,7 +115,8 @@ class Student {
    constructor (name, gender, age) {
    this.name = name,
    this.gender = gender,
-   this.age = age 
+   this.age = age
+   
    }
 
    addMark = function (mark, subject) {
@@ -123,7 +124,7 @@ class Student {
          return console.log(`Ошибка, оценка должна быть числом от 1 до 5`)
       }
       if (this.marks === undefined) {
-         this.marks = []
+         this.marks = {}
       }
    
       if (this.marks[subject] === undefined) {
@@ -134,7 +135,7 @@ class Student {
    }
    addMarks = function ( subject, ...marks) {
       if (this.marks === undefined) {
-         this.marks = []
+         this.marks = {}
       }
          
       if (this.marks[subject] === undefined) {
@@ -156,14 +157,20 @@ class Student {
          }
          return acc
       }, 0); 
-      return console.log(`Средний балл по предмету ${subject} : ${averageBySubject}`)
+      return averageBySubject 
+      // console.log(`Средний балл по предмету ${subject} : ${averageBySubject}`)
    }
 
    getAverage = function () {
-      let arrMarks = Object.values(student.marks);
+      if (this.marks === undefined) {
+         return console.log('Нет оценок')
+      }
+    
+      let arrMarks = Object.values(this.marks);
       const arrAverage = arrMarks.flat(2);
       const average = (arrAverage.reduce((acc, item) => acc + item, 0)) / arrAverage.length;
-      return console.log(`Средний балл по всем предметам : ${average}`);
+      return average
+      // console.log(`Средний балл по всем предметам : ${average}`);
    };
 
    exclude = function (reason) {
@@ -172,14 +179,14 @@ class Student {
    };
 };
 
-// const student = new Student("ivan", "male", 15);
-// console.log(student.addMark(5, "algebra"));
-// student.addMark(5, "algebra");
-// student.addMark(5, "geometry");
-// student.addMark(4, "geometry");
-//  student.addMark(6, "geometry"); // "Ошибка, оценка должна быть числом от 1 до 5"
-//  student.getAverageBySubject("geometry"); // Средний балл по предмету geometry 4.5
-//  student.getAverageBySubject("algebra"); // Средний балл по предмету geometry 4.5
-//  student.getAverageBySubject("biology"); // Несуществующий предмет
-//  student.getAverage(); // Средний балл по всем предметам 4.75
+const student = new Student("ivan", "male", 15);
+student.addMark(5, "algebra");
+student.addMark(5, "algebra");
+student.addMark(5, "geometry");
+student.addMark(4, "geometry");
+ student.addMark(6, "geometry"); // "Ошибка, оценка должна быть числом от 1 до 5"
+ student.getAverageBySubject("geometry"); // Средний балл по предмету geometry 4.5
+ student.getAverageBySubject("algebra"); // Средний балл по предмету geometry 4.5
+ student.getAverageBySubject("biology"); // Несуществующий предмет
+ student.getAverage(); // Средний балл по всем предметам 4.75
 //  student.exclude("Исключен за попытку подделать оценки");
